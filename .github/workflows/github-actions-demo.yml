@@ -24,5 +24,8 @@ jobs:
           TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
           TWILIO_API_KEY: ${{ secrets.TWILIO_API_KEY }}
           TWILIO_API_SECRET: ${{ secrets.TWILIO_API_SECRET }}
-        run: npm install twilio-cli -g && twilio plugins:install @twilio-labs/plugin-serverless && twilio serverless:deploy --environment=prod
+        run: |
+          npm install twilio-cli -g 
+          twilio plugins:install @twilio-labs/plugin-serverless
+          twilio serverless:deploy --environment=prod --force
       - run: echo "🍏 This job's status is ${{ job.status }}."
