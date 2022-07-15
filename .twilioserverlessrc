@@ -4,8 +4,8 @@
     "dev": {
       "env": ".env.dev"
     },
-    "test": {
-      "env": ".env.test"
+    "prod": {
+      "env": ".env.prod"
     }
   },
   "projects": {},
