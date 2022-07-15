@@ -1,13 +1,6 @@
 {
   "commands": {},
-  "environments": {
-    "dev": {
-      "env": ".env.dev"
-    },
-    "prod": {
-      "env": ".env.prod"
-    }
-  },
+  "environments": {},
   "projects": {},
     // "assets": true                   /* Upload assets. Can be turned off with --no-assets */,
     // "assetsFolder": null             /* Specific folder name to be used for static assets */,
@@ -42,7 +35,7 @@
     // "properties": null               /* Specify the output properties you want to see. Works best on single types */,
     // "region": null                   /* Twilio API Region */,
     // "runtime": null                  /* The version of Node.js to deploy the build to. (node10 or node12) */,
-    "serviceName": "frontline-callbacks"              /* Overrides the name of the Serverless project. Default: the name field in your package.json */,
+    // "serviceName": "frontline-callbacks"              /* Overrides the name of the Serverless project. Default: the name field in your package.json */,
     // "serviceSid": null               /* SID of the Twilio Serverless Service to deploy to */,
     // "sourceEnvironment": null        /* SID or suffix of an existing environment you want to deploy from. */,
     // "tail": false                    /* Continuously stream the logs */,
