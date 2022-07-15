@@ -32,7 +32,40 @@ const customersToWorkersMap = {};
 //   }
 // ]
 
-const customers = [];
+const customers = [
+    {
+        customer_id: 98,
+        display_name: 'Tom Horton',
+        channels: [
+            { type: 'email', value: 'thorton@twilio.com' },
+            { type: 'sms', value: '+19196499613' }
+        ],
+        links: [
+            { type: 'Facebook', value: 'https://facebook.com', display_name: 'Social Media Profile' }
+        ],
+        details:{
+            title: "Information",
+            content: "Status: Active" + "\n\n" + "Score: 100"
+        },
+        worker: 'thorton@twilio.com'
+    },
+    {
+        customer_id: 99,
+        display_name: 'Foo Bar',
+        channels: [
+            { type: 'email', value: 'thorton+foo-bar@twilio.com' },
+            { type: 'sms', value: '+12068097526' }
+        ],
+        links: [
+            { type: 'Facebook', value: 'https://facebook.com', display_name: 'Social Media Profile' }
+        ],
+        details:{
+            title: "Information",
+            content: "Status: Active" + "\n\n" + "Score: 100"
+        },
+        worker: 'thorton@twilio.com'
+    }
+];
 
 const findWorkerForCustomer = async (customerNumber) => customersToWorkersMap[customerNumber];
 
@@ -48,7 +81,7 @@ const findRandomWorker = async () => {
 }
 
 const getCustomersList = async (worker, pageSize, anchor) => {
-    const workerCustomers = customers.filter(customer => customer.worker === worker);
+    const workerCustomers = customers.filter(customer => customer.worker.toLowerCase() === worker.toLowerCase());
     const list = workerCustomers.map(customer => ({
         display_name: customer.display_name,
         customer_id: customer.customer_id,

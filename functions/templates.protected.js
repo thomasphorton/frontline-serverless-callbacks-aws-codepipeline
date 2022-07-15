@@ -1,35 +1,42 @@
-const { getCustomerById } = require('../../providers/customers');
+const customerProviderPath = Runtime.getFunctions()['providers/customers'].path;
+const { getCustomerById } = require(customerProviderPath);
 
-const templatesCallbackHandler = async (req, res) => {
-    const location = req.body.Location;
+exports.handler = async function (context, event, callback) {
+    let response = new Twilio.Response();
+    response.appendHeader('Content-Type', 'application/json');
+
+    const location = event.Location;
 
     // Location helps to determine which information was requested.
     // CRM callback is a general purpose tool and might be used to fetch different kind of information
     switch (location) {
         case 'GetTemplatesByCustomerId': {
-            await handleGetTemplatesByCustomerIdCallback(req, res);
-            return;
+            let { body, statusCode } = await handleGetTemplatesByCustomerIdCallback(event);
+            response.setBody(body);
+            response.setStatusCode(statusCode);
+            break;
         }
 
         default: {
             console.log('Unknown location: ', location);
-            res.sendStatus(422);
+            response.setStatusCode(422);
         }
     }
+
+    return callback(null, response);
 };
 
-const handleGetTemplatesByCustomerIdCallback = async (req, res) => {
-    const body = req.body
-    console.log('Getting templates: ', body.CustomerId);
+const handleGetTemplatesByCustomerIdCallback = async (event) => {
+    console.log('Getting templates: ', event.CustomerId);
 
-    const workerIdentity = body.Worker;
-    const customerId = body.CustomerId;
-    const conversationSid = body.ConversationSid;
-
+    const customerId = event.CustomerId;
     const customerDetails = await getCustomerById(customerId);
 
     if (!customerDetails) {
-        return res.status(404).send("Customer not found");
+        return {
+            body: "Customer not found",
+            statusCode: 404
+        };
     }
 
     // Prepare templates categories
@@ -59,7 +66,10 @@ const handleGetTemplatesByCustomerIdCallback = async (req, res) => {
     };
 
     // Respond with compiled Templates
-    res.send([openersCategory, repliesCategory, closingCategory]);
+    return {
+        body: [openersCategory, repliesCategory, closingCategory],
+        statusCode: 200
+    }
 };
 
 const compileTemplate = (template, customer) => {
@@ -79,5 +89,3 @@ const REPLY_OPTIONS = 'Would you like me to go over some options with you {{Name
 const REPLY_ASK_DOCUMENTS = 'We have a secure drop box for documents. Can you attach and upload them here: https://example.com. {{Author}}';
 
 const CLOSING_ASK_REVIEW = 'Happy to help, {{Name}}. If you have a moment could you leave a review about our interaction at this link: https://example.com. {{Author}}.';
-
-module.exports = templatesCallbackHandler;
