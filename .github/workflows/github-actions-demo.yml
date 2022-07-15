@@ -18,7 +18,7 @@ jobs:
       - name: Create env file
         run: |
           touch .env
-          echo TWILIO_SMS_NUMBER=${ secrets.TWILIO_SMS_NUMBER } >> .env
+          echo TWILIO_SMS_NUMBER=${{ secrets.TWILIO_SMS_NUMBER }} >> .env
       - name: Install twilio cli and run deploy command
         env:
           TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
