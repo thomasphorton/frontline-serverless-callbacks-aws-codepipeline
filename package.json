@@ -1,9 +1,9 @@
 {
-  "name": "frontline-demo-service",
+  "name": "frontline-serverless-callbacks",
   "version": "0.10.0",
-  "description": "Twilio Frontline integration sample",
+  "description": "Twilio Frontline integration sample with CI/CD",
   "main": "src/index.js",
-  "repository": "git@github.com:twilio/frontline-demo-service.git",
+  "repository": "git@github.com:thomasphorton/frontline-serverless-callbacks",
   "author": "Twilio <twilio.com>",
   "license": "MIT",
   "scripts": {
