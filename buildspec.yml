@@ -1,0 +1,11 @@
+version: 0.2
+        
+phases:
+  install:
+    commands:
+      - npm ci
+      - npm i twilio-cli -g
+      - twilio plugins:install @twilio-labs/plugin-serverless
+  build:
+    commands:
+      - twilio serverless:deploy --environment=prod --force
